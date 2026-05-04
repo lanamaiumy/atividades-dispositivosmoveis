@@ -1,18 +1,19 @@
 import React from 'react';
-import { 
-  TouchableOpacity, 
-  Text, 
-  StyleSheet, 
-  TouchableOpacityProps, 
-  ActivityIndicator 
-} from 'react-native';
+import { TouchableOpacity, Text, StyleSheet, TouchableOpacityProps, ActivityIndicator } from 'react-native';
 
 interface FormButtonProps extends TouchableOpacityProps {
   title: string;
   loading?: boolean;
 }
 
-export default function FormButton({ title, loading, disabled, ...props }: FormButtonProps) {
+export default function FormButton({ 
+  disabled, 
+  loading, 
+  title, 
+  ...props }: FormButtonProps) {
+
+//{...props} — repassa quaisquer outras props recebidas, como onPress.
+
   return (
     <TouchableOpacity 
       style={[

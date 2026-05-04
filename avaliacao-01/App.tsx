@@ -6,7 +6,7 @@ import FormButton from './src/components/FormButton';
 import { styles } from './App.styles';
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true); // declaração do estado
   const [form, setForm] = useState({
     produto: '',
     quantidade: '',
@@ -22,14 +22,13 @@ export default function App() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLoading(false);
-      console.log("Sistema Carregado...");
-    }, 2000);
+    }, 2000); // quando o tempo se encerra, a função setIsLoading(false) é carregada
 
     return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
-    const produtoValido = form.produto.trim().length >= 3;
+    const produtoValido = form.produto.trim().length >= 3; // trim() para limpar os espaços em branco de realizar a validação correta
     const quantidadeValida = Number(form.quantidade) > 0;
     const fornecedorValido = form.fornecedor.trim().length >= 3;
 
@@ -50,7 +49,7 @@ export default function App() {
   if (isLoading) {
     return (
       <View style={styles.loadingContainer}>
-        <Text style={styles.loadingText}>Carregando Feira de Alimentos...</Text>
+        <Text style={styles.loadingText}>🌿 Carregando Feira de Alimentos...</Text>
       </View>
     );
   }
@@ -58,14 +57,18 @@ export default function App() {
   return (
     <ScreenWrapper>
       <View style={styles.header}>
-        <Image 
-          source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2329/2329865.png' }} 
-          style={styles.logo} 
-        />
-        <Text style={styles.title}>Cadastro de Mercadoria</Text>
+        <View style={styles.logoWrapper}>
+          <Image
+            source={{ uri: 'https://cdn-icons-png.flaticon.com/512/2329/2329865.png' }}
+            style={styles.logo}
+          />
+        </View>
+        <Text style={styles.title}>
+          Cadastro de <Text style={styles.titleAccent}>Mercadoria</Text>
+        </Text>
       </View>
 
-      <FormInput 
+      <FormInput
         label="Nome do Produto"
         placeholder="Ex: Tomate Cereja"
         value={form.produto}
@@ -73,7 +76,7 @@ export default function App() {
         error={errors.produto}
       />
 
-      <FormInput 
+      <FormInput
         label="Quantidade (kg)"
         placeholder="Ex: 10"
         keyboardType="numeric"
@@ -81,7 +84,7 @@ export default function App() {
         onChangeText={(val) => setForm({ ...form, quantidade: val })}
       />
 
-      <FormInput 
+      <FormInput
         label="Fornecedor"
         placeholder="Nome da Fazenda ou Distribuidor"
         value={form.fornecedor}
@@ -89,17 +92,19 @@ export default function App() {
       />
 
       <View style={styles.switchContainer}>
-        <Text style={styles.switchLabel}>Pedido Urgente?</Text>
-        <Switch 
+        <Text style={[styles.switchLabel, form.urgente && styles.switchLabelUrgent]}>
+          {form.urgente ? '🔴 Pedido Urgente' : 'Pedido Urgente?'}
+        </Text>
+        <Switch
           value={form.urgente}
           onValueChange={(val) => setForm({ ...form, urgente: val })}
-          trackColor={{ false: "#767577", true: "#2D2D2D" }}
-          thumbColor={form.urgente ? "#FFF" : "#f4f3f4"}
+          trackColor={{ false: '#D9D0C5', true: '#2C6E3F' }}
+          thumbColor={form.urgente ? '#FFFFFF' : '#F0EBE3'}
         />
       </View>
 
-      <FormButton 
-        title="Finalizar Cadastro" 
+      <FormButton
+        title="Finalizar Cadastro"
         onPress={handleSubmit}
         disabled={!isFormValid}
       />
